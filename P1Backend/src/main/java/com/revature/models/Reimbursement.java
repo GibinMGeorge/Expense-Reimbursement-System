@@ -111,6 +111,6 @@ public class Reimbursement {
     public enum Status {
         PENDING,
         APPROVED,
-        REJECTED,
+        REJECTED
     }
 }

@@ -119,6 +119,6 @@ public class User {
     // Enum for user Roles
     public enum Role {
         USER,
-        MANAGER,
+        MANAGER
     }
 }

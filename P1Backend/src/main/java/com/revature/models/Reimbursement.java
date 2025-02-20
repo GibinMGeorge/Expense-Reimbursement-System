@@ -30,27 +30,38 @@ public class Reimbursement {
     @Column(nullable = false)
     private Status status;      // PENDING, APPROVED, DENIED
 
+    @ManyToOne
+    @JoinColumn(name = "approver_id", referencedColumnName = "id")
+    private User approver;
+
+    @Column(columnDefinition = "TEXT")
+    private String comment;
+
     public Reimbursement() {
     }
 
     // Constructor for creating a new reimbursement
 
-    public Reimbursement(User user, String description, BigDecimal amount, Status status) {
+    public Reimbursement(User user, String description, BigDecimal amount, Status status, User approver, String comment) {
         this.user = user;
         this.description = description;
         this.amount = amount;
         this.status = status;
+        this.approver = approver;
+        this.comment = comment;
     }
 
     // Constructor for retrieving an existing reimbursement
 
 
-    public Reimbursement(Long id, User user, String description, BigDecimal amount, Status status) {
+    public Reimbursement(Long id, User user, String description, BigDecimal amount, Status status, User approver, String comment) {
         this.id = id;
         this.user = user;
         this.description = description;
         this.amount = amount;
         this.status = status;
+        this.approver = approver;
+        this.comment = comment;
     }
 
     // getters and setters
@@ -94,6 +105,22 @@ public class Reimbursement {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public User getApprover() {
+        return approver;
+    }
+
+    public void setApprover(User approver) {
+        this.approver = approver;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
     @Override

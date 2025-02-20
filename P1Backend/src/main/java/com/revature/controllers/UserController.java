@@ -1,5 +1,6 @@
 package com.revature.controllers;
 
+import com.revature.dto.ReimbursementDTO;
 import com.revature.dto.UserDTO;
 import com.revature.models.User;
 import com.revature.service.ReimbursementService;

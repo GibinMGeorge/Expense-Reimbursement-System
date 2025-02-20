@@ -14,5 +14,5 @@ public interface ReimbursementRepository {
 
     // find reimbursements by userId and status
     List<Reimbursement> findByUserIdAndStatus(Long userId, Reimbursement.Status status);
-    
+
 }

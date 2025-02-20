@@ -10,13 +10,17 @@ public class ReimbursementDTO {
     private BigDecimal amount;
     private final Reimbursement.Status status;
     private final Long userId;
+    private final Long approverId;
+    private final String comment;
 
-    public ReimbursementDTO(Long id, String description, BigDecimal amount, String status, Long userId){
+    public ReimbursementDTO(Long id, String description, BigDecimal amount, String status, Long userId, Long approverId, String comment){
         this.id = id;
         this.description = description;
         this.amount = amount;
         this.status = status != null ? Reimbursement.Status.valueOf(status) : Reimbursement.Status.PENDING;
         this.userId = userId;
+        this.approverId = approverId;
+        this.comment = comment;
     }
 
     public Long getId() {
@@ -39,6 +43,14 @@ public class ReimbursementDTO {
         return userId;
     }
 
+    public Long getApproverId() {
+        return approverId;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
     @Override
     public String toString() {
         return "ReimbursementDTO{" +
@@ -47,6 +59,8 @@ public class ReimbursementDTO {
                 ", amount=" + amount +
                 ", status=" + status +
                 ", userId=" + userId +
+                ", approverId=" + approverId +
+                ", comment='" + comment + '\'' +
                 '}';
     }
 

@@ -1,7 +1,9 @@
 package com.revature.service;
 
 import com.revature.dto.ReimbursementDTO;
+import com.revature.exception.InvalidReimbursementStatusException;
 import com.revature.exception.InvalidUserRoleException;
+import com.revature.exception.ReimbursementNotFoundException;
 import com.revature.exception.UserNotFoundException;
 import com.revature.mapper.ReimbursementMapper;
 import com.revature.mapper.UserMapper;

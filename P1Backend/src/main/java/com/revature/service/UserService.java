@@ -1,6 +1,9 @@
 package com.revature.service;
 
 import com.revature.dto.UserDTO;
+import com.revature.exception.InvalidUserRoleException;
+import com.revature.exception.UserCreationException;
+import com.revature.exception.UserNotFoundException;
 import com.revature.mapper.UserMapper;
 import com.revature.models.User;
 import com.revature.repositories.UserRepository;

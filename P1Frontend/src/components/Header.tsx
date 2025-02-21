@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import Logo from "../logo.svg";
+// import Logo from "../logo.svg";
 // import "./Header.css";
 
 const Header: React.FC = () => {
@@ -7,7 +7,7 @@ const Header: React.FC = () => {
     <header className="header">
       <div className="header-content">
         <Link to="/" className="logo-container">
-          <Logo/>
+          {/* <Logo/> */}
           <span className="logo-text">
             Employee Reimbursement System (ERS)
           </span>

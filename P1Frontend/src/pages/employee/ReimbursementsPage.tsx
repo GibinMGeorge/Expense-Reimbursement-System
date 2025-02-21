@@ -1,5 +1,5 @@
 import { ReimbursementResponse } from '../../interfaces/reimbursement';
-import { getReimbursements } from '@/services/reimbursementService';
+import { getReimbursements } from '../../services/reimbursementService';
 import { useEffect, useState } from 'react';
 
 const ReimbursementsPage: React.FC = () => {

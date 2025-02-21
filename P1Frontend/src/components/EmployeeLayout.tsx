@@ -1,6 +1,6 @@
 import { Link, Outlet } from "react-router-dom";
 import { Footer } from "./Footer";
-import Logo from "@/assets/logo.svg?react";
+// import Logo from "@/assets/logo.svg?react";
 import { Button } from "./Button";
 // import "./EmployeeLayout.css"; 
 
@@ -10,7 +10,7 @@ const EmployeeLayout: React.FC = () => {
       <header className="header">
         <div className="header-content">
           <Link to="/" className="logo-container">
-            <Logo className="logo" />
+            {/* <Logo/> */}
             <span className="logo-text"> Employee Reimbursement System (ERS) </span>
           </Link>
           <nav className="nav-links">

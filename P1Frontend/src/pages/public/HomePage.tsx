@@ -1,17 +1,17 @@
 import { Button } from "../../components/Button";
-import Logo from "../logo.svg";
+// import Logo from "../logo.svg";
 import { PageWrapper } from "../../components/PageWrapper";
 
 const HomePage: React.FC = () => {
   return (
     <PageWrapper>
       <header style={{ marginBottom: "3rem", textAlign: "center" }}>
-        <Logo/>
+        {/* <Logo/> */}
         <h1 style={{ fontSize: "1.5rem", fontWeight: "bold", color: "#111827", marginBottom: "0.5rem" }}>
-          ReimburseMate
+        Employee Reimbursement System (ERS)
         </h1>
         <p style={{ color: "#374151", marginBottom: "1.5rem" }}>
-          Manage your reimbursements with ease.
+          Manage your reimbursements.
         </p>
       </header>
       <div style={{ display: "flex", justifyContent: "space-between" }}>

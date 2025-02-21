@@ -1,4 +1,4 @@
-import { ReimbursementResponse } from '@/interfaces/reimbursement';
+import { ReimbursementResponse } from '../../interfaces/reimbursement';
 import { getReimbursements } from '@/services/reimbursementService';
 import { useEffect, useState } from 'react';
 

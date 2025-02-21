@@ -1,12 +1,12 @@
-import { Button } from "@/components/Button";
-import Logo from "@/assets/logo.svg?react";
-import { PageWrapper } from "@/components/layout/PageWrapper/PageWrapper";
+import { Button } from "../../components/Button";
+import Logo from "../logo.svg";
+import { PageWrapper } from "../../components/PageWrapper";
 
 const HomePage: React.FC = () => {
   return (
     <PageWrapper>
       <header style={{ marginBottom: "3rem", textAlign: "center" }}>
-        <Logo style={{ height: "80px", width: "80px", marginBottom: "1rem", color: "#2563eb" }} />
+        <Logo/>
         <h1 style={{ fontSize: "1.5rem", fontWeight: "bold", color: "#111827", marginBottom: "0.5rem" }}>
           ReimburseMate
         </h1>

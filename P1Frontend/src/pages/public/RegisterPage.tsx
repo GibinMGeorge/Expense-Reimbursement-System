@@ -1,6 +1,6 @@
-import { PageWrapper } from '@/components/layout/PageWrapper/PageWrapper';
-import { Button } from '@/components/ui/Button/Button';
-import { Input } from '@/components/ui/Input/Input';
+import { Input } from '../../components/Input';
+import { PageWrapper } from '../../components/PageWrapper';
+import { Button } from '../../components/Button';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 

@@ -1,4 +1,4 @@
-import { ReimbursementResponse } from '@/interfaces/reimbursement';
+import { ReimbursementResponse } from '../interfaces/reimbursement';
 import { api } from './api';
 
 const getReimbursements = async (): Promise<ReimbursementResponse[]> => {

@@ -1,6 +1,6 @@
 import { Button } from "../../components/Button";
 // import Logo from "../logo.svg";
-import { PageWrapper } from "../../components/PageWrapper";
+import { PageWrapper } from "../../components/layout/PageWrapper";
 
 const HomePage: React.FC = () => {
   return (

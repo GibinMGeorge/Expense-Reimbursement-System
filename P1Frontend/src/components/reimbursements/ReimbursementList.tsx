@@ -1,46 +1,40 @@
-import { ReimbursementResponse } from "@/interfaces/reimbursement";
-import { ReimbursementRow } from "../ReimbursementRow/ReimbursementRow";
-import { useState } from "react";
-import { ReimbursementStatus } from "@/interfaces/ReimbursementStatus";
-import { UserRole } from "@/interfaces/UserRole";
+import { ReimbursementResponse } from '../../interfaces/reimbursement';
+import { ReimbursementRow } from './ReimbursementRow';
+import { useState } from 'react';
+import { ReimbursementStatus } from '../../interfaces/ReimbursementStatus';
+import { UserRole } from '../../interfaces/UserRole';
 
 interface ReimbursementListProps {
   reimbursements: ReimbursementResponse[];
   role?: UserRole;
-}
+  handleReimbursementChanged?: () => void;
+};
 
-const ReimbursementList: React.FC<ReimbursementListProps> = ({ reimbursements, role }) => {
-  const [filterStatus, setFilterStatus] = useState<ReimbursementStatus>("ALL");
+const ReimbursementList: React.FC<ReimbursementListProps> = ({ reimbursements, role, handleReimbursementChanged }) => {
+  const [filterStatus, setFilterStatus] = useState<ReimbursementStatus>('ALL');
 
-  const filteredReimbursements = reimbursements.filter(
-    (reimbursement) => filterStatus === "ALL" || reimbursement.status === filterStatus
+  const filteredReimbursements = reimbursements.filter((reimbursement) =>
+    filterStatus === 'ALL' || reimbursement.status === filterStatus
   );
 
   return (
-    <div style={{ overflowX: "auto" }}>
-      <table
-        style={{
-          minWidth: "100%",
-          backgroundColor: "white",
-          borderRadius: "8px",
-          boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
-        }}
-      >
-        <thead style={{ backgroundColor: "#f9fafb" }}>
+    <div className="overflow-x-auto">
+      <table className="min-w-full bg-white rounded-lg shadow-md">
+        <thead className="bg-gray-50">
           <tr>
-            <th style={headerStyle}>Description</th>
-            <th style={headerStyle}>Amount</th>
-            <th style={headerStyle}>
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Description
+            </th>
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Amount
+            </th>
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               <select
                 value={filterStatus}
-                onChange={(e) => setFilterStatus(e.target.value as ReimbursementStatus)}
-                style={{
-                  backgroundColor: "transparent",
-                  color: "#6b7280",
-                  border: "none",
-                  cursor: "pointer",
-                  outline: "none",
-                }}
+                onChange={(e) =>
+                  setFilterStatus(e.target.value as ReimbursementStatus)
+                }
+                className="bg-transparent text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer"
               >
                 <option value="ALL">STATUS</option>
                 <option value="PENDING">PENDING</option>
@@ -48,18 +42,27 @@ const ReimbursementList: React.FC<ReimbursementListProps> = ({ reimbursements, r
                 <option value="REJECTED">REJECTED</option>
               </select>
             </th>
-            <th style={headerStyle}>Approver's Comment</th>
-            <th style={headerStyle}>Actions</th>
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Approver's Comment
+            </th>
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Actions
+            </th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className="divide-y divide-gray-200">
           {filteredReimbursements.length > 0 ? (
             filteredReimbursements.map((reimbursement) => (
-              <ReimbursementRow key={reimbursement.id} reimbursement={reimbursement} role={role} />
+              <ReimbursementRow
+                key={reimbursement.id}
+                reimbursement={reimbursement}
+                role={role}
+                handleReimbursementChanged={handleReimbursementChanged}
+              />
             ))
           ) : (
             <tr>
-              <td colSpan={5} style={{ padding: "16px", textAlign: "center", color: "#4b5563", fontStyle: "italic" }}>
+              <td colSpan={5} className="px-6 py-4 text-center text-gray-700 italic">
                 No reimbursements found.
               </td>
             </tr>
@@ -68,17 +71,6 @@ const ReimbursementList: React.FC<ReimbursementListProps> = ({ reimbursements, r
       </table>
     </div>
   );
-};
-
-// Common header style
-const headerStyle: React.CSSProperties = {
-  padding: "12px",
-  textAlign: "left",
-  fontSize: "12px",
-  fontWeight: "600",
-  color: "#6b7280",
-  textTransform: "uppercase",
-  letterSpacing: "0.05em",
 };
 
 export { ReimbursementList };

@@ -1,4 +1,4 @@
-import { PageWrapperProps } from "../interfaces/PageWrapperProps";
+import { PageWrapperProps } from "../../interfaces/PageWrapperProps";
 
 const PageWrapper: React.FC<PageWrapperProps> = ({ children }) => {
   return (

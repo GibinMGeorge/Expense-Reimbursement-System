@@ -1,7 +1,7 @@
-import { UserResponse } from '@/interfaces/user';
-import { UserRole } from '@/interfaces/UserRole';
+import { UserResponse } from '../../interfaces/user';
+import { UserRole } from '../../interfaces/UserRole';
 import { useState } from 'react';
-import { UserRow } from '@/components/users/UserRow/UserRow';
+import { UserRow } from './UserRow';
 
 interface UserListProps {
   users: UserResponse[];

@@ -1,8 +1,8 @@
 import { Link, Outlet } from "react-router-dom";
-import { Footer } from "@/components/layout/Footer/Footer";
-import Logo from "@/assets/logo.svg?react";
-import { UserRole } from "@/interfaces/UserRole";
-import { Button } from "@/components/ui/Button/Button";
+import { Footer } from "./Footer";
+// import Logo from "@/assets/logo.svg?react";
+import { UserRole } from "../../interfaces/UserRole";
+import { Button } from "../Button";
 
 interface UserLayoutProps {
   role: UserRole;
@@ -14,7 +14,7 @@ const UserLayout: React.FC<UserLayoutProps> = (role: UserLayoutProps) => {
       <header style={{ backgroundColor: "#f9fafb", boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)", padding: "16px 0" }}>
         <div style={{ width: "90%", maxWidth: "1200px", margin: "0 auto", display: "flex", justifyContent: "space-between", alignItems: "center", textAlign: "center", flexDirection: "column" }}>
           <Link to="/" style={{ display: "flex", alignItems: "center", textDecoration: "none" }}>
-            <Logo style={{ height: "40px", width: "40px", color: "#2563eb", display: "none" }} />
+            {/* <Logo/> */}
             <span style={{ fontSize: "1.25rem", fontWeight: "600", color: "#111827", marginLeft: "10px" }}>
               ReimburseMate
             </span>

@@ -1,3 +1,5 @@
+import { ReimbursementStatus } from "./ReimbursementStatus";
+
 // Interface for Reimbursement response object from backend
 
 export interface ReimbursementRequest {
@@ -7,7 +9,12 @@ export interface ReimbursementRequest {
     userId: number;
   };
   
-
+  export interface ReimbursementResolveRequest {
+    status: ReimbursementStatus;
+    comment: string | null;
+    approverId: number;
+  };
+  
 //Interface for Reimbursement request object to backend
 
   export interface ReimbursementResponse {

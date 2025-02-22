@@ -1,13 +1,9 @@
-import { CreateReimbursementFormModal } from '@/components/reimbursements/CreateReimbursementFormModal/CreateReimbursementFormModal';
-import { ReimbursementList } from "@/components/reimbursements/ReimbursementList/ReimbursementList";
-import { Button } from "@/components/ui/Button/Button";
-import { ReimbursementRequest, ReimbursementResponse } from "@/interfaces/reimbursement";
-import { UserRole } from "@/interfaces/UserRole";
-import {
-  createReimbursement,
-  getReimbursements,
-  getReimbursementsByUserId,
-} from "@/services/reimbursementService";
+import { CreateReimbursementFormModal } from "../../components/reimbursements/CreateReimbursementForm";
+import { ReimbursementList } from "../../components/reimbursements/ReimbursementList";
+import { Button } from "../../components/Button";
+import { ReimbursementRequest, ReimbursementResponse } from "../../interfaces/reimbursement";
+import { UserRole } from "../../interfaces/UserRole";
+import { createReimbursement, getReimbursements, getReimbursementsByUserId,} from "../../services/reimbursementService";
 import { PlusIcon } from "@heroicons/react/24/outline";
 import { useEffect, useState } from "react";
 import toast from 'react-hot-toast';
@@ -46,14 +42,15 @@ const EmployeeReimbursements: React.FC<ReimbursementListProps> = ({ role }) => {
   }, []);
 
   const handleSaveReimbursement = async () => {
+    const payload: ReimbursementRequest = {
+      userId: 4,
+      description: newReimbursementDescription,
+      amount: newReimbursementAmount,
+      status: "PENDING",
+    };
+    console.log(payload);
+
     try {
-      const payload: ReimbursementRequest = {
-        userId: 4,
-        description: newReimbursementDescription,
-        amount: newReimbursementAmount,
-        status: "PENDING",
-      };
-      console.log(payload)
       const response = await createReimbursement(payload);
       setNewReimbursementAmount(0);
       setNewReimbursementDescription('');
@@ -65,6 +62,10 @@ const EmployeeReimbursements: React.FC<ReimbursementListProps> = ({ role }) => {
     }
 
     fetchData();
+  };
+
+  const handleReimbursementChanged = async () => {
+    await fetchData();
   };
 
   const [isCreateModalOpen, setIsCreateModalOpen] = useState<boolean>(false);
@@ -80,11 +81,15 @@ const EmployeeReimbursements: React.FC<ReimbursementListProps> = ({ role }) => {
           className="rounded-full flex items-center justify-center shadow-sm bg-green-600 hover:bg-green-700"
           aria-label="Add Reimbursement"
         >
-          <PlusIcon className="w-6 h-6 pr-2" /> Create New Reimbursement
+          <PlusIcon className="w-6 h-6 pr-2" />Create New Reimbursement
         </Button>
       </div>
       {reimbursements && reimbursements.length > 0 ? (
-        <ReimbursementList reimbursements={reimbursements} role={role} />
+        <ReimbursementList
+          reimbursements={reimbursements}
+          role={role}
+          handleReimbursementChanged={handleReimbursementChanged}
+        />
       ) : (
         <p className="text-lg text-gray-700 text-center py-4 italic">
           No reimbursements found.
@@ -103,4 +108,4 @@ const EmployeeReimbursements: React.FC<ReimbursementListProps> = ({ role }) => {
   );
 };
 
-export { EmployeeReimbursements }; 
+export { EmployeeReimbursements };

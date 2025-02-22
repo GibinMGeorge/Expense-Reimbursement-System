@@ -1,6 +1,6 @@
-import { UserList } from '@/components/users/UserList/UserList';
-import { UserResponse } from '@/interfaces/user';
-import { getUsers } from '@/services/userService';
+import { UserList } from '../../components/users/Userlist';
+import { UserResponse } from '../../interfaces/user';
+import { getUsers } from '../../services/userService';
 import { useEffect, useState } from 'react';
 
 const ManagerUsers: React.FC = () => {

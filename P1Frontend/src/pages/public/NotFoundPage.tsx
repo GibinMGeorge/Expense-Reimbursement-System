@@ -1,4 +1,4 @@
-import { PageWrapper } from '../../components/PageWrapper';
+import { PageWrapper } from '../../components/layout/PageWrapper';
 import { Button } from '../../components/Button';
 
 const NotFoundPage: React.FC = () => {

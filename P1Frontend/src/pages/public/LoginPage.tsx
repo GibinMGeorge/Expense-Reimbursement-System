@@ -1,4 +1,4 @@
-import { PageWrapper } from '../../components/PageWrapper';
+import { PageWrapper } from '../../components/layout/PageWrapper';
 import { Button } from '../../components/Button';
 import { Input } from '../../components/Input';
 import { useState } from 'react';

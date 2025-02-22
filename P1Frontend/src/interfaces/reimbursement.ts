@@ -18,6 +18,4 @@ export interface ReimbursementRequest {
     userId: number;
     approverId: number | null;
     comment: string | null;
-    createdAt: string;
-    updatedAt: string;
   };

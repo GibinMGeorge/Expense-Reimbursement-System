@@ -24,7 +24,7 @@ const RegisterPage: React.FC = () => {
       lastName,
       username,
       password,
-      role: UserRole.EMPLOYEE,
+      role: UserRole.USER,
     };
 
     try {

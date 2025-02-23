@@ -1,16 +1,17 @@
-import { Button } from '../Button';
-import { ReimbursementStatus } from '../../interfaces/ReimbursementStatus';
-import { useEffect } from 'react';
+import { Button } from "../Button";
+import { ReimbursementStatus } from "../../interfaces/ReimbursementStatus";
+import { useEffect, useState } from "react";
+import M from "materialize-css"; // Ensure Materialize works
 
 interface ResolveReimbursementModalProps {
   isOpen: boolean;
   handleClose: () => void;
   handleResolve: () => void;
-  newStatus: ReimbursementStatus;
+  newStatus: ReimbursementStatus | null;
   setNewStatus: (value: ReimbursementStatus) => void;
-  newComment: string | null;
-  setNewComment: (value: string | null) => void;
-};
+  newComment: string;
+  setNewComment: (value: string) => void;
+}
 
 const ResolveReimbursementModal: React.FC<ResolveReimbursementModalProps> = ({
   isOpen,
@@ -21,74 +22,53 @@ const ResolveReimbursementModal: React.FC<ResolveReimbursementModalProps> = ({
   newComment,
   setNewComment,
 }) => {
+  const [error, setError] = useState<string>("");
+
+  useEffect(() => {
+    setError(""); // Reset error on modal open
+    M.AutoInit(); // Initialize Materialize modals
+  }, [isOpen]);
+
   const handleResolveButtonClick = () => {
+    if (!newStatus) {
+      setError("Please select a status before resolving.");
+      return;
+    }
     handleResolve();
     handleClose();
   };
 
-  useEffect(() => {
-      const handleEscape = (e: KeyboardEvent) => {
-        if (e.key === 'Escape') {
-          handleClose();
-        }
-      };
-
-      document.addEventListener('keydown', handleEscape);
-
-      return () => {
-        document.removeEventListener('keydown', handleEscape);
-      };
-    }, [handleClose]);
-
-    const handleClickOutside = (e: React.MouseEvent) => {
-      if ((e.target as HTMLElement).classList.contains('modal-overlay')) {
-        handleClose();
-      }
-    };
-
-  if (!isOpen) {
-    return null;
-  }
+  if (!isOpen) return null;
 
   return (
-    <div
-      className="fixed inset-0 flex items-center justify-center bg-gray-900/50 modal-backdrop"
-      onClick={handleClickOutside}
-    >
-      <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-md">
-        <h2 className="text-xl font-semibold mb-8">Resolve Reimbursement</h2>
+    <div id="resolveReimbursementModal" className="modal open">
+      <div className="modal-content">
+        <h4 className="center-align">Resolve Reimbursement</h4>
+        <p>Select the new status for this reimbursement:</p>
         <select
-          value={newStatus}
+          value={newStatus || ""}
           onChange={(e) => setNewStatus(e.target.value as ReimbursementStatus)}
-          className="w-full p-2 border border-gray-300 rounded mb-4"
+          className="browser-default"
         >
-          <option value="ALL">Select Status</option>
-          <option value="PENDING">Pending</option>
-          <option value="APPROVED">Approved</option>
-          <option value="REJECTED">Rejected</option>
+          <option value="" disabled>Select Status</option>
+          <option value="APPROVED">Approve</option>
+          <option value="REJECTED">Deny</option>
         </select>
+        {error && <p className="red-text">{error}</p>}
         <textarea
-          value={newComment ?? ''}
+          value={newComment}
           onChange={(e) => setNewComment(e.target.value)}
           placeholder="Add a comment..."
-          className="w-full p-2 border border-gray-300 rounded mb-4 resize-none"
-          rows={4}
+          className="materialize-textarea"
         />
-        <div className="flex justify-between gap-2">
-          <Button
-            handleClick={handleResolveButtonClick}
-            className="text-green-600 hover:text-green-100 bg-green-100 hover:bg-green-600 active:bg-green-700"
-            isActive={newComment !== null && newStatus !== 'ALL'}
-          >
-            Resolve
-          </Button>
-          <Button
-            handleClick={handleClose}
-            className="text-red-600 hover:text-red-100 bg-red-100 hover:bg-red-600 active:bg-red-700"
-          >
-            Cancel
-          </Button>
-        </div>
+      </div>
+      <div className="modal-footer">
+        <Button handleClick={handleResolveButtonClick} className="btn green">
+          Confirm
+        </Button>
+        <Button handleClick={handleClose} className="btn red">
+          Cancel
+        </Button>
       </div>
     </div>
   );

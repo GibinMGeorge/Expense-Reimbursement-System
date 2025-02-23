@@ -1,11 +1,12 @@
 import { Button } from "../Button";
 import { ReimbursementResolveRequest, ReimbursementResponse } from "../../interfaces/reimbursement";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ResolveReimbursementModal } from "./ResolveReimbursement";
 import { resolveReimbursement } from "../../services/reimbursementService";
 import toast from "react-hot-toast";
 import { ReimbursementStatus } from "../../interfaces/ReimbursementStatus";
 import { UserRole } from "../../interfaces/UserRole";
+import M from "materialize-css"; // Materialize Initialization
 
 interface ReimbursementRowProps {
   reimbursement: ReimbursementResponse;
@@ -21,10 +22,19 @@ const ReimbursementRow: React.FC<ReimbursementRowProps> = ({
   const { id, description, amount, status, comment } = reimbursement;
 
   const [isResolveModalOpen, setIsResolveModalOpen] = useState<boolean>(false);
-  const [newStatus, setNewStatus] = useState<ReimbursementStatus>(status);
-  const [newComment, setNewComment] = useState<string | null>(comment);
+  const [newStatus, setNewStatus] = useState<ReimbursementStatus | null>(null);
+  const [newComment, setNewComment] = useState<string>("");
+
+  useEffect(() => {
+    M.AutoInit(); // Reinitialize Materialize CSS
+  }, []);
 
   const handleResolveReimbursement = async () => {
+    if (!newStatus) {
+      toast.error("Please select either Approve or Deny before resolving.");
+      return;
+    }
+
     const payload: ReimbursementResolveRequest = {
       status: newStatus,
       comment: newComment,
@@ -33,7 +43,8 @@ const ReimbursementRow: React.FC<ReimbursementRowProps> = ({
 
     try {
       await resolveReimbursement(id, payload);
-      toast.success("Reimbursement resolved successfully!");
+      toast.success(`Reimbursement ${newStatus === "APPROVED" ? "Approved" : "Denied"} Successfully!`);
+      setIsResolveModalOpen(false);
       if (handleReimbursementChanged) handleReimbursementChanged();
     } catch (error: any) {
       toast.error("Failed to resolve reimbursement.");
@@ -63,12 +74,13 @@ const ReimbursementRow: React.FC<ReimbursementRowProps> = ({
         <td>
           <div className="action-buttons">
             {role === "MANAGER" && status === "PENDING" && (
-              <Button
-                handleClick={() => setIsResolveModalOpen(true)}
-                className="btn waves-effect green darken-1"
+              <button
+                className="btn waves-effect waves-light green darken-1 modal-trigger"
+                data-target="resolveReimbursementModal"
+                onClick={() => setIsResolveModalOpen(true)}
               >
                 Resolve
-              </Button>
+              </button>
             )}
           </div>
         </td>

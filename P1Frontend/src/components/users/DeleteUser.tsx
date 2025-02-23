@@ -27,6 +27,11 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = ({
     };
   }, [handleClose]);
 
+  const handleDeleteButtonClick = () => {
+    handleDeleteUser();
+    handleClose();
+  }
+
   if (!isOpen) return null;
 
   return (
@@ -39,7 +44,7 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = ({
       </div>
       <div className="modal-footer">
         <Button
-          handleClick={handleDeleteUser}
+          handleClick={handleDeleteButtonClick}
           className="btn red darken-1 waves-effect waves-light"
         >
           Delete

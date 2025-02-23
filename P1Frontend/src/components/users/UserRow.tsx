@@ -1,7 +1,6 @@
 import { UserResponse } from '../../interfaces/user';
 import { UserRole } from "../../interfaces/UserRole";
 import { Button } from '../Button';
-import { TrashIcon, ArrowPathIcon } from '@heroicons/react/24/outline';
 import { useState } from 'react';
 import { DeleteUserModal } from './DeleteUser';
 import { ChangeUserRoleModal } from './UpdateUserRole';

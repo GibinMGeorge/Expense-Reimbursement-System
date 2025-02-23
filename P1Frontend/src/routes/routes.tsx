@@ -26,7 +26,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/employee',
-    element: <UserLayout role={UserRole.EMPLOYEE} />,
+    element: <UserLayout role={UserRole.USER} />,
     children: [
       { path: '', element: <Navigate to="/employee/reimbursements" /> },
       { path: 'reimbursements', element: <EmployeeReimbursements /> },

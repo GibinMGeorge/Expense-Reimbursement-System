@@ -3,7 +3,7 @@ import { router } from './routes/routes';
 import { Toaster } from 'react-hot-toast';
 import "materialize-css/dist/css/materialize.min.css";
 import "materialize-css/dist/js/materialize.min.js";
-import "./App.css";
+// import "./App.css";
 
 const App: React.FC = () => {
   return (

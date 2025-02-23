@@ -15,7 +15,7 @@ const LoginPage: React.FC = () => {
 
   const handleLogin = async () => {
     try {
-      const response = await fetch("http://localhost:8080/api/gmg/auth", {
+      const response = await fetch("http://localhost:8080/api/gmg/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

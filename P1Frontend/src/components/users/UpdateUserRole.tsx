@@ -49,29 +49,41 @@ const ChangeUserRoleModal: React.FC<ChangeUserRoleModalProps> = ({
 
   return (
     <div
-      className="fixed inset-0 flex items-center justify-center bg-gray-900/50 modal-backdrop"
       onClick={handleClickOutside}
     >
-      <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-md">
-        <h2 className="text-xl font-semibold mb-8">Change User Role</h2>
-        <p className="mb-4">Select the new role for this user:</p>
-        <select
-          defaultValue={newRole}
-          onChange={(e) => setNewRole(e.target.value as UserRole)}
-          className="w-full p-2 border border-gray-300 rounded mb-12"
-        >
-          <option value={UserRole.USER}>Employee</option>
-          <option value={UserRole.MANAGER}>Manager</option>
-        </select>
-        <div className="flex justify-between gap-2">
-          <Button handleClick={handleChangeButtonClick} className="btn green">
-            Change
+      <div className="row" style={{ maxWidth: "200%" }}>
+      <div className="card-panel lighten-4 center-align">
+        <h5 className="black-text text-darken-3" style={{ fontWeight: "bold", fontSize: "2rem" }}>
+          Promote Employee to Manager ?
+        </h5>
+        <div className="card white z-depth-3">
+        {/* <div className="card-content">
+          <p className="flow-text center-align grey-text text-darken-1">
+            Promote employee to Manager
+          </p>
+        </div> */}
+
+        <div className="card-action center-align" style={{ display: "flex", justifyContent: "center", gap: "15px" }}>
+          <Button
+            handleClick={handleChangeButtonClick}
+            className="btn green darken-2 waves-effect waves-light"
+          >
+            Promote
           </Button>
-          <Button handleClick={handleClose} className="btn red">
+          <Button
+            handleClick={handleClose}
+            className="btn red darken-2 waves-effect waves-light"
+            
+          >
             Cancel
           </Button>
         </div>
       </div>
+
+      </div>
+
+      
+    </div>
     </div>
   );
 };

@@ -1,28 +1,13 @@
-Ensure full height for layout
-html, body, #root, .layout-container {
-  height: 100%;
+
+/* body {
   display: flex;
+  min-height: 100vh;
   flex-direction: column;
 }
 
-/* Allow the content to grow and push footer down */
-.layout-content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-/* Stick footer to the bottom */
-footer {
-  background-color: #2d6a4f; /* Adjust color */
-  color: white;
-  padding: 1rem;
-  text-align: center;
-  width: 100%;
-}
-
+main {
+  flex: 1 0 auto;
+} */
 
 /* #root {
   max-width: 1280px;

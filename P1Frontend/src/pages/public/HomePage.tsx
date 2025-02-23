@@ -6,7 +6,7 @@ const HomePage: React.FC = () => {
   const navigate = useNavigate();
 
   // Check if user is logged in
-  const isAuthenticated = !!localStorage.getItem("userId"); // Assuming userId is stored in localStorage
+  const isAuthenticated = !!localStorage.getItem("userId"); 
 
   const handleNavigation = (path: string) => {
     if (!isAuthenticated) {

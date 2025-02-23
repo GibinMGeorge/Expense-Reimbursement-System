@@ -65,9 +65,9 @@ const EmployeeReimbursements: React.FC<ReimbursementListProps> = ({ role }) => {
   return (
     <div className="container section">
       <div className="card-panel green lighten-4 center-align">
-        <h4 className="green-text text-darken-2">
+      <h1 className="black-text text-darken-3" style={{ fontWeight: "bold", fontSize: "2rem" }}>
           {role === "MANAGER" ? "Manage" : "Your"} Reimbursements
-        </h4>
+        </h1>
       </div>
 
     <div className="center-align" style={{ marginTop: "20px" }}>

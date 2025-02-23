@@ -62,11 +62,11 @@ const ResolveReimbursementModal: React.FC<ResolveReimbursementModalProps> = ({
           className="materialize-textarea"
         />
       </div>
-      <div className="modal-footer">
-        <Button handleClick={handleResolveButtonClick} className="btn green">
+      <div className="modal-footer" style={{ display: "flex", justifyContent: "center", gap: "15px" }}>
+        <Button handleClick={handleResolveButtonClick} className="btn green mx-2">
           Confirm
         </Button>
-        <Button handleClick={handleClose} className="btn red">
+        <Button handleClick={handleClose} className="btn red mx-2">
           Cancel
         </Button>
       </div>

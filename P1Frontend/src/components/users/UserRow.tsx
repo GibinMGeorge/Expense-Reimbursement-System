@@ -64,15 +64,15 @@ const UserRow: React.FC<UserRowProps> = ({ user, handleRowDeleted }) => {
           </span>
         </td>
         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-          <div className="flex gap-4">
+          <div className="flex gap-4" style={{ display: "flex", justifyContent: "center", gap: "15px" }}>
             {/* Promote only Employees */}
             {role === UserRole.USER && (
               <Button
                 handleClick={() => setIsRoleChangeModalOpen(true)}
-                className="w-12 h-12 flex items-center justify-center text-orange-600 hover:text-orange-100 bg-orange-100 hover:bg-orange-600 active:bg-orange-700"
+                className="btn blue darken-2 waves-effect waves-light btn-small"
                 aria-label="Promote to Manager"
               >
-                <ArrowPathIcon />
+                <i className="material-icons">swap_vert</i>
               </Button>
             )}
 
@@ -80,10 +80,10 @@ const UserRow: React.FC<UserRowProps> = ({ user, handleRowDeleted }) => {
             {role === UserRole.USER && (
             <Button
             handleClick={() => setIsDeleteModalOpen(true)}
-            className="btn red darken-2 waves-effect waves-light btn-small"
+            className="btn red darken-2 waves-effect waves-light btn-small" 
             aria-label="Delete User"
           >
-            <i className="material-icons">remove_circle_outline</i>
+            <i className="material-icons">clear</i>
           </Button>                              
             
             )}

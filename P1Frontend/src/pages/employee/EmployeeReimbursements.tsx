@@ -70,16 +70,28 @@ const EmployeeReimbursements: React.FC<ReimbursementListProps> = ({ role }) => {
         </h4>
       </div>
 
-      {/* Create New Reimbursement Button (Floating Button) */}
-      <div className="fixed-action-btn">
-        <a
-          href="#createReimbursementModal"
-          className="btn-floating btn-large green darken-2 waves-effect waves-light modal-trigger"
-          onClick={() => setIsCreateModalOpen(true)}
-        >
-          <i className="material-icons">add</i>
-        </a>
-      </div>
+    <div className="center-align" style={{ marginTop: "20px" }}>
+      <a
+        href="#createReimbursementModal"
+        className="btn green darken-2 waves-effect waves-light modal-trigger"
+        onClick={() => setIsCreateModalOpen(true)}
+        style={{
+          padding: "25px 20px",  
+          borderRadius: "20px",
+          fontSize: "14px",  
+          display: "flex",
+          justifyContent: "center",  
+          alignItems: "center",
+          width: "250px",  
+          margin: "0 auto",  
+          textAlign: "center",
+        }}
+      >
+        <i className="material-icons"></i>
+        Create New Reimbursement
+      </a>
+    </div>
+
 
       {/* Reimbursement List */}
       {reimbursements.length > 0 ? (

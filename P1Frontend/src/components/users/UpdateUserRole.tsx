@@ -1,19 +1,29 @@
-import { useEffect } from "react";
 import { Button } from "../Button";
+import { UserRole } from "../../interfaces/UserRole";
+import { useEffect } from "react";
 
-interface DeleteUserModalProps {
+interface ChangeUserRoleModalProps {
   isOpen: boolean;
   handleClose: () => void;
-  handleDeleteUser: () => void;
+  handleChangeRole: (userId: number, newRole: UserRole) => void;
+  newRole: UserRole;
+  setNewRole: (value: UserRole) => void;
   userId: number;
 }
 
-const DeleteUserModal: React.FC<DeleteUserModalProps> = ({
+const ChangeUserRoleModal: React.FC<ChangeUserRoleModalProps> = ({
   isOpen,
   handleClose,
-  handleDeleteUser,
+  handleChangeRole,
+  newRole,
+  setNewRole,
   userId,
 }) => {
+  const handleChangeButtonClick = () => {
+    handleChangeRole(userId, newRole);
+    handleClose();
+  };
+
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
@@ -27,32 +37,43 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = ({
     };
   }, [handleClose]);
 
-  if (!isOpen) return null;
+  const handleClickOutside = (e: React.MouseEvent) => {
+    if ((e.target as HTMLElement).classList.contains("modal-overlay")) {
+      handleClose();
+    }
+  };
+
+  if (!isOpen) {
+    return null;
+  }
 
   return (
-    <div className="modal open">
-      <div className="modal-content">
-        <h4 className="center-align">Delete User</h4>
-        <p className="center-align red-text">
-          Are you sure you want to delete this user with ID <strong>{userId}</strong>?
-        </p>
-      </div>
-      <div className="modal-footer">
-        <Button
-          handleClick={handleDeleteUser}
-          className="btn red darken-1 waves-effect waves-light"
+    <div
+      className="fixed inset-0 flex items-center justify-center bg-gray-900/50 modal-backdrop"
+      onClick={handleClickOutside}
+    >
+      <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-md">
+        <h2 className="text-xl font-semibold mb-8">Change User Role</h2>
+        <p className="mb-4">Select the new role for this user:</p>
+        <select
+          defaultValue={newRole}
+          onChange={(e) => setNewRole(e.target.value as UserRole)}
+          className="w-full p-2 border border-gray-300 rounded mb-12"
         >
-          Delete
-        </Button>
-        <Button
-          handleClick={handleClose}
-          className="btn grey waves-effect waves-light"
-        >
-          Cancel
-        </Button>
+          <option value={UserRole.USER}>Employee</option>
+          <option value={UserRole.MANAGER}>Manager</option>
+        </select>
+        <div className="flex justify-between gap-2">
+          <Button handleClick={handleChangeButtonClick} className="btn green">
+            Change
+          </Button>
+          <Button handleClick={handleClose} className="btn red">
+            Cancel
+          </Button>
+        </div>
       </div>
     </div>
   );
 };
 
-export { DeleteUserModal };
+export { ChangeUserRoleModal };

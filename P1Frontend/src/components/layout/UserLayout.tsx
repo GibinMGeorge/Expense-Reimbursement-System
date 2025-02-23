@@ -52,7 +52,7 @@ const UserLayout: React.FC<UserLayoutProps> = (role: UserLayoutProps) => {
             <ul className="right hide-on-med-and-down">
               {/* Username Display */}
               <li>
-                <span className="white-text">Hello, {role.role}</span>
+                <span className="white-text">Hello, {localStorage.getItem('username')}</span>
               </li>
 
               {/* Logout Button (Moved to Right) */}

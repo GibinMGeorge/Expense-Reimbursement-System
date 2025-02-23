@@ -1,7 +1,7 @@
-import { UserResponse } from '../../interfaces/user';
-import { UserRole } from '../../interfaces/UserRole';
-import { useState } from 'react';
-import { UserRow } from './UserRow';
+import { UserResponse } from "../../interfaces/user";
+import { UserRole } from "../../interfaces/UserRole";
+import { useState } from "react";
+import { UserRow } from "./UserRow";
 
 interface UserListProps {
   users: UserResponse[];
@@ -9,54 +9,41 @@ interface UserListProps {
 }
 
 const UserList: React.FC<UserListProps> = ({ users, handleRowDeleted }) => {
-  const [filterRole, setFilterRole] = useState<UserRole | 'ALL'>('ALL');
+  const [filterRole, setFilterRole] = useState<UserRole | "ALL">("ALL");
 
-  const filteredUsers = users.filter((user) =>
-    filterRole === 'ALL' || user.role === filterRole
+  const filteredUsers = users.filter(
+    (user) => filterRole === "ALL" || user.role === filterRole
   );
 
   return (
-    <div className="overflow-x-auto">
-      <table className="min-w-full bg-white rounded-lg shadow-md">
-        <thead className="bg-gray-50">
+    <div className="container">
+      <table className="striped highlight centered responsive-table">
+        <thead>
           <tr>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Name
-            </th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Username
-            </th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th>Name</th>
+            <th>Username</th>
+            <th>
               <select
                 value={filterRole}
-                onChange={(e) => setFilterRole(e.target.value as UserRole | 'ALL')}
-                className="bg-transparent text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer"
+                onChange={(e) => setFilterRole(e.target.value as UserRole | "ALL")}
+                className="browser-default"
               >
-                <option value="ALL">ROLE</option>
-                <option value={UserRole.EMPLOYEE}>EMPLOYEE</option>
-                <option value={UserRole.MANAGER}>MANAGER</option>
+                <option value="ALL">Role</option>
+                <option value={UserRole.USER}>Employee</option>
+                <option value={UserRole.MANAGER}>Manager</option>
               </select>
             </th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Created At
-            </th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Actions
-            </th>
+            <th>Actions</th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-gray-200">
+        <tbody>
           {filteredUsers.length > 0 ? (
             filteredUsers.map((user) => (
-              <UserRow
-                key={user.id}
-                user={user}
-                handleRowDeleted={handleRowDeleted}
-              />
+              <UserRow key={user.id} user={user} handleRowDeleted={handleRowDeleted} />
             ))
           ) : (
             <tr>
-              <td colSpan={5} className="px-6 py-4 text-center text-gray-700 italic">
+              <td colSpan={5} className="center-align grey-text">
                 No users found.
               </td>
             </tr>

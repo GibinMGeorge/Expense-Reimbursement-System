@@ -18,23 +18,17 @@ const ReimbursementList: React.FC<ReimbursementListProps> = ({ reimbursements, r
   );
 
   return (
-    <div className="overflow-x-auto">
-      <table className="min-w-full bg-white rounded-lg shadow-md">
-        <thead className="bg-gray-50">
+    <div className="container section">
+      <table className="highlight centered responsive-table">
+        <thead>
           <tr>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Description
-            </th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Amount
-            </th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th>Description</th>
+            <th>Amount</th>
+            <th>
               <select
                 value={filterStatus}
-                onChange={(e) =>
-                  setFilterStatus(e.target.value as ReimbursementStatus)
-                }
-                className="bg-transparent text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer"
+                onChange={(e) => setFilterStatus(e.target.value as ReimbursementStatus)}
+                className="browser-default"
               >
                 <option value="ALL">STATUS</option>
                 <option value="PENDING">PENDING</option>
@@ -42,15 +36,11 @@ const ReimbursementList: React.FC<ReimbursementListProps> = ({ reimbursements, r
                 <option value="REJECTED">REJECTED</option>
               </select>
             </th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Approver's Comment
-            </th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Actions
-            </th>
+            <th>Approver's Comment</th>
+            <th>Actions</th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-gray-200">
+        <tbody>
           {filteredReimbursements.length > 0 ? (
             filteredReimbursements.map((reimbursement) => (
               <ReimbursementRow
@@ -62,9 +52,7 @@ const ReimbursementList: React.FC<ReimbursementListProps> = ({ reimbursements, r
             ))
           ) : (
             <tr>
-              <td colSpan={5} className="px-6 py-4 text-center text-gray-700 italic">
-                No reimbursements found.
-              </td>
+              <td colSpan={5} className="center-align grey-text">No reimbursements found.</td>
             </tr>
           )}
         </tbody>

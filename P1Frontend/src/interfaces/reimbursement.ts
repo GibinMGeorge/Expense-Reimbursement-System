@@ -5,7 +5,7 @@ import { ReimbursementStatus } from "./ReimbursementStatus";
 export interface ReimbursementRequest {
     description: string;
     amount: number;
-    status: 'PENDING' | 'APPROVED' | 'REJECTED';
+    status: ReimbursementStatus;
     userId: number;
   };
   

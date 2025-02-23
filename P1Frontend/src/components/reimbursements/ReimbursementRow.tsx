@@ -1,174 +1,78 @@
 import { Button } from "../Button";
-import { ReimbursementRequest,ReimbursementResolveRequest, ReimbursementResponse  } from "../../interfaces/reimbursement";
-import { PencilIcon, TrashIcon, CheckCircleIcon } from "@heroicons/react/24/outline";
-import { useState } from 'react';
-import { EditReimbursementFormModal } from "./EditReimbursementForm";
-import { DeleteReimbursementModal } from "./DeleteReimbursement";
-import { UserRole } from "../../interfaces/UserRole";
+import { ReimbursementResolveRequest, ReimbursementResponse } from "../../interfaces/reimbursement";
+import { useState } from "react";
 import { ResolveReimbursementModal } from "./ResolveReimbursement";
-import { resolveReimbursement, updateReimbursement } from "../../services/reimbursementService";
-import toast from 'react-hot-toast';
+import { resolveReimbursement } from "../../services/reimbursementService";
+import toast from "react-hot-toast";
 import { ReimbursementStatus } from "../../interfaces/ReimbursementStatus";
+import { UserRole } from "../../interfaces/UserRole";
 
-interface ReimbursementCardProps {
+interface ReimbursementRowProps {
   reimbursement: ReimbursementResponse;
   role?: UserRole;
   handleReimbursementChanged?: () => void;
 }
 
-const ReimbursementRow: React.FC<ReimbursementCardProps> = ({
+const ReimbursementRow: React.FC<ReimbursementRowProps> = ({
   reimbursement,
   role,
   handleReimbursementChanged,
 }) => {
   const { id, description, amount, status, comment } = reimbursement;
 
-  const [isEditModalOpen, setIsEditModalOpen] = useState<boolean>(false);
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
   const [isResolveModalOpen, setIsResolveModalOpen] = useState<boolean>(false);
-
-  const [newReimbursementAmount, setNewReimbursementAmount] = useState<number>(amount);
-  const [newReimbursementDescription, setNewReimbursementDescription] = useState<string>(description);
-
   const [newStatus, setNewStatus] = useState<ReimbursementStatus>(status);
   const [newComment, setNewComment] = useState<string | null>(comment);
-
-  const handleEditReimbursement = async () => {
-    const payload: ReimbursementRequest = {
-      userId: 4,
-      description: newReimbursementDescription,
-      amount: newReimbursementAmount,
-      status: status,
-    };
-    console.log(payload);
-
-    try {
-      const response = await updateReimbursement(reimbursement.id, payload);
-
-      if (handleReimbursementChanged) {
-        handleReimbursementChanged();
-      }
-
-      toast.success("Reimbursement updated successfully!");
-      console.log(response);
-    } catch (error: any) {
-      toast.error("Failed to update reimbursement. Please try again later.");
-      console.error("Error updating reimbursement:", error);
-    }
-  };
 
   const handleResolveReimbursement = async () => {
     const payload: ReimbursementResolveRequest = {
       status: newStatus,
       comment: newComment,
-      approverId: 1,
+      approverId: Number(localStorage.getItem("userId")), // Approver's ID
     };
 
-    console.log(payload);
-
     try {
-      const response = await resolveReimbursement(reimbursement.id, payload);
-
-      if (handleReimbursementChanged) {
-        handleReimbursementChanged();
-      }
-
+      await resolveReimbursement(id, payload);
       toast.success("Reimbursement resolved successfully!");
-      console.log(response);
+      if (handleReimbursementChanged) handleReimbursementChanged();
     } catch (error: any) {
-      toast.error("Failed to resolve reimbursement. Please try again later.");
+      toast.error("Failed to resolve reimbursement.");
       console.error("Error resolving reimbursement:", error);
-    }
-  };
-
-  const handleDeleteReimbursement = async (reimbursementId: number) => {
-    try {
-      const response = await handleDeleteReimbursement(reimbursementId);
-
-      if (handleReimbursementChanged) {
-        handleReimbursementChanged();
-      }
-
-      console.log(response);
-      toast.success('Reimbursement deleted successfully!');
-    } catch (error: any) {
-      toast.error('Failed to delete reimbursement. Please try again later.');
-      console.error('Error deleting reimbursement:', error);
     }
   };
 
   return (
     <>
-      <tr className="hover:bg-gray-50 transition-colors duration-200">
-        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 max-w-xs">
-          {description}
-        </td>
-        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-          ${amount}
-        </td>
-        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+      <tr>
+        <td>{description}</td>
+        <td>${amount}</td>
+        <td>
           <span
-            className={`px-2 py-1 rounded-full text-xs font-semibold ${
+            className={`badge ${
               status === "PENDING"
-                ? "bg-yellow-100 text-yellow-800"
+                ? "yellow darken-1"
                 : status === "APPROVED"
-                ? "bg-green-100 text-green-800"
-                : "bg-red-100 text-red-800"
+                ? "green darken-1"
+                : "red darken-1"
             }`}
           >
             {status}
           </span>
         </td>
-        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-          {comment ?? "N/A"}
-        </td>
-        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-          <div className="flex gap-4">
-            {role === 'MANAGER' && (
+        <td>{comment ?? "N/A"}</td>
+        <td>
+          <div className="action-buttons">
+            {role === "MANAGER" && status === "PENDING" && (
               <Button
                 handleClick={() => setIsResolveModalOpen(true)}
-                className="w-12 h-12 flex items-center justify-center text-orange-600 hover:text-orange-100 bg-orange-100 hover:bg-orange-600 active:bg-orange-700"
-                aria-label="Resolve"
+                className="btn waves-effect green darken-1"
               >
-                <CheckCircleIcon />
+                Resolve
               </Button>
             )}
-            <Button
-              handleClick={() => setIsEditModalOpen(true)}
-              isActive={status === "PENDING" || role === 'MANAGER'}
-              className="w-12 h-12 flex items-center justify-center text-green-600 hover:text-green-100 bg-green-100 hover:bg-green-600 active:bg-green-700"
-              aria-label="Edit"
-            >
-              <PencilIcon />
-            </Button>
-            <Button
-              handleClick={() => setIsDeleteModalOpen(true)}
-              isActive={status === "PENDING" || role === 'MANAGER'}
-              className="w-12 h-12 flex items-center justify-center text-red-600 hover:text-red-100 bg-red-100 hover:bg-red-600 active:bg-red-700"
-              aria-label="Delete"
-            >
-              <TrashIcon />
-            </Button>
           </div>
         </td>
       </tr>
-
-      <EditReimbursementFormModal
-        isOpen={isEditModalOpen}
-        handleClose={() => setIsEditModalOpen(false)}
-        handleSave={handleEditReimbursement}
-        amount={newReimbursementAmount}
-        setAmount={setNewReimbursementAmount}
-        description={newReimbursementDescription}
-        setDescription={setNewReimbursementDescription}
-      />
-
-      <DeleteReimbursementModal
-        isOpen={isDeleteModalOpen}
-        handleClose={() => setIsDeleteModalOpen(false)}
-        handleDelete={handleDeleteReimbursement}
-        reimbursementId={id}
-      />
 
       <ResolveReimbursementModal
         isOpen={isResolveModalOpen}

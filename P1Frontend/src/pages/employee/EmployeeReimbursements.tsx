@@ -6,7 +6,7 @@ import { UserRole } from "../../interfaces/UserRole";
 import { createReimbursement, getReimbursements, getReimbursementsByUserId } from "../../services/reimbursementService";
 import { useEffect, useState } from "react";
 import toast from 'react-hot-toast';
-import M from 'materialize-css'; // Import Materialize for modal support
+import M from 'materialize-css'; // Materialize for modal
 
 interface ReimbursementListProps {
   role?: UserRole;
@@ -18,6 +18,8 @@ const EmployeeReimbursements: React.FC<ReimbursementListProps> = ({ role }) => {
   const [newReimbursementDescription, setNewReimbursementDescription] = useState<string>('');
   const [isCreateModalOpen, setIsCreateModalOpen] = useState<boolean>(false);
 
+  const userId = Number(localStorage.getItem("userId")); // Get logged-in user's ID
+
   useEffect(() => {
     M.AutoInit(); // Initialize Materialize components
     fetchData();
@@ -26,11 +28,13 @@ const EmployeeReimbursements: React.FC<ReimbursementListProps> = ({ role }) => {
   const fetchData = async () => {
     try {
       let reimbursements: ReimbursementResponse[];
+
       if (role === "MANAGER") {
-        reimbursements = await getReimbursements();
+        reimbursements = await getReimbursements(); // Fetch all reimbursements for managers
       } else {
-        reimbursements = await getReimbursementsByUserId(4);
+        reimbursements = await getReimbursementsByUserId(userId); // Fetch only user's reimbursements
       }
+
       setReimbursements(reimbursements);
     } catch (error: any) {
       console.log(error.message);
@@ -39,7 +43,7 @@ const EmployeeReimbursements: React.FC<ReimbursementListProps> = ({ role }) => {
 
   const handleSaveReimbursement = async () => {
     const payload: ReimbursementRequest = {
-      userId: 4,
+      userId: userId, // Use the logged-in user's ID
       description: newReimbursementDescription,
       amount: newReimbursementAmount,
       status: "PENDING",
@@ -66,7 +70,7 @@ const EmployeeReimbursements: React.FC<ReimbursementListProps> = ({ role }) => {
         </h4>
       </div>
 
-      {/* Create New Reimbursement Button (Materialize Floating Button) */}
+      {/* Create New Reimbursement Button (Floating Button) */}
       <div className="fixed-action-btn">
         <a
           href="#createReimbursementModal"

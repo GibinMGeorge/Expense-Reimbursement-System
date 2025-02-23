@@ -63,4 +63,9 @@ public class AuthService {
         return userMapper.toDTO(user);
     }
 
+    //logout a user
+    public void logoutUser(HttpSession session) {
+        session.invalidate();
+    }
+
 }

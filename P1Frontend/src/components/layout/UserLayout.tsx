@@ -1,37 +1,59 @@
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import { Footer } from "./Footer";
-// import Logo from "@/assets/logo.svg?react";
 import { UserRole } from "../../interfaces/UserRole";
 import { Button } from "../Button";
+import { toast } from "react-hot-toast";
+import { logoutUser } from "../../services/authService";
 
 interface UserLayoutProps {
   role: UserRole;
 }
 
 const UserLayout: React.FC<UserLayoutProps> = (role: UserLayoutProps) => {
+  const navigate = useNavigate();
+
+  const handleLogoutClick = async (e: React.MouseEvent) => {
+      e.preventDefault();
+
+      try {
+        const response = await logoutUser();
+
+        const loadingToast = toast.loading('You are being redirected to the login page...');
+        toast.success('Logout successful!');
+
+        localStorage.removeItem('userId');
+        localStorage.removeItem('username');
+        localStorage.removeItem('role');
+
+        setTimeout(() => {
+          navigate('/login');
+          toast.dismiss(loadingToast);
+        }, 2000);
+
+        console.log(response);
+      } catch (error) {
+        toast.error('Logout failed. Please try again.');
+        console.error('Logout failed:', error);
+      }
+  };
+
   return (
-    <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
-      <header style={{ backgroundColor: "#f9fafb", boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)", padding: "16px 0" }}>
-        <div style={{ width: "90%", maxWidth: "1200px", margin: "0 auto", display: "flex", justifyContent: "space-between", alignItems: "center", textAlign: "center", flexDirection: "column" }}>
-          <Link to="/" style={{ display: "flex", alignItems: "center", textDecoration: "none" }}>
-            {/* <Logo/> */}
-            <span style={{ fontSize: "1.25rem", fontWeight: "600", color: "#111827", marginLeft: "10px" }}>
-              ReimburseMate
+    <div className="flex flex-col min-h-screen">
+      <header className="bg-gray-50 shadow-sm">
+        <div className="container mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between items-center text-center md:text-left">
+          <Link to="/" className="flex flex-col sm:flex-row items-center">
+            <span className="mt-2 sm:mt-0 sm:ml-2 text-xl font-semibold text-gray-900">
+              Employee Reimbursement System
             </span>
           </Link>
-          <nav style={{ display: "flex", flexDirection: "column", marginTop: "16px" }}>
-            <span style={{ fontSize: "1rem", color: "#111827" }}>
-              Hello, <span style={{ fontStyle: "italic", color: "#2563eb" }}>{role.role}</span>
+          <nav className="mt-4 sm:mt-0 flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4">
+            <span className="mt-2 sm:mt-0 sm:ml-2 text-md text-gray-900">
+              Hello, <span className="italic text-blue-600">{role.role}</span>
             </span>
             <Link
               to="/logout"
-              style={{
-                color: "#374151",
-                textDecoration: "none",
-                fontSize: "1rem",
-                transition: "color 0.3s ease-in-out",
-                marginTop: "8px",
-              }}
+              onClick={handleLogoutClick}
+              className="text-gray-800 hover:text-gray-900 active:text-blue-600 transition-colors duration-300 ease-in-out"
               aria-label="Logout Page"
             >
               Logout
@@ -39,11 +61,19 @@ const UserLayout: React.FC<UserLayoutProps> = (role: UserLayoutProps) => {
           </nav>
         </div>
       </header>
-      <main style={{ display: "flex", flexDirection: "column", flexGrow: 1, alignItems: "center", padding: "24px" }}>
+      <main className="flex flex-col flex-grow items-center px-4 py-6">
         {role.role === "MANAGER" && (
-          <div style={{ padding: "16px", display: "flex", gap: "16px", marginBottom: "16px" }}>
-            <Button to="/manager/reimbursements">Manage Reimbursements</Button>
-            <Button to="/manager/users">Manage Users</Button>
+          <div className="p-4 flex space-x-4 mb-4">
+            <Button
+              to="/manager/reimbursements"
+            >
+              Manage Reimbursements
+            </Button>
+            <Button
+              to="/manager/users"
+            >
+              Manage Users
+            </Button>
           </div>
         )}
         <Outlet />

@@ -1,7 +1,7 @@
 import { UserRole } from './UserRole';
 
 
- // Interface for User request object to backend
+  // Interface for User request object to backend
 
 export interface UserRequest {
   firstName: string;
@@ -12,7 +12,14 @@ export interface UserRequest {
 }
 
 
- // Interface for User response object from backend
+  // interface for login object to backend
+
+  export interface UserLoginRequest {
+    username: string;
+    password: string;
+  };  
+
+  // Interface for User response object from backend
 
 export interface UserResponse {
   id: number;
@@ -20,6 +27,4 @@ export interface UserResponse {
   lastName: string;
   username: string;
   role: UserRole;
-  createdAt: string;
-  updatedAt: string;
 }

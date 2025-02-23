@@ -1,4 +1,30 @@
-#root {
+/* Ensure full height for layout */
+html, body, #root, .layout-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Allow the content to grow and push footer down */
+.layout-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Stick footer to the bottom */
+footer {
+  background-color: #2d6a4f; /* Adjust color */
+  color: white;
+  padding: 1rem;
+  text-align: center;
+  width: 100%;
+}
+
+
+/* #root {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
@@ -31,12 +57,12 @@
   a:nth-of-type(2) .logo {
     animation: logo-spin infinite 20s linear;
   }
-}
+} */
 
-.card {
+/* .card {
   padding: 2em;
 }
 
 .read-the-docs {
   color: #888;
-}
+} */

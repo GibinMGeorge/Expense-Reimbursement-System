@@ -64,6 +64,15 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
     }
 
+    // handle MissingRequiredfieldsException and return CustomErrorResponse
+
+    @ExceptionHandler(MissingRequiredFieldsException.class)
+    public ResponseEntity<CustomErrorResponse> handleMissingRequiredFieldsException(MissingRequiredFieldsException e) {
+        CustomErrorResponse errorResponse = new CustomErrorResponse(HttpStatus.BAD_REQUEST.value(), e.getMessage());
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+    }
+
      // Handle Exception and return CustomErrorResponse
 
     @ExceptionHandler(Exception.class)

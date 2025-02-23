@@ -1,12 +1,12 @@
-import { Outlet } from 'react-router-dom';
-import { Footer } from './Footer';
-import { Header } from './Header';
+import { Outlet } from "react-router-dom";
+import { Footer } from "./Footer";
+import { Header } from "./Header";
 
 const Layout: React.FC = () => {
   return (
-    <div>
+    <div className="layout-container">
       <Header />
-      <main>
+      <main className="layout-content">
         <Outlet />
       </main>
       <Footer />

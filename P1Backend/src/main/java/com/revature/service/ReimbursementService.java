@@ -164,4 +164,10 @@ public class ReimbursementService {
         return reimbursementMapper.toDTO(updatedReimbursement);
     }
 
+    public void deleteReimbursement(Long reimbursementId) {
+        Reimbursement reimbursement = reimbursementRepository.findById(reimbursementId)
+                .orElseThrow(() -> new ReimbursementNotFoundException("Reimbursement not found with ID: " + reimbursementId));
+
+        reimbursementRepository.delete(reimbursement);
+    }
 }

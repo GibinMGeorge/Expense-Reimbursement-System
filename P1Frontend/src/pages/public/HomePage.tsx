@@ -1,12 +1,9 @@
-import { Button } from "../../components/Button";
-// import Logo from "../logo.svg";
 import { PageWrapper } from "../../components/layout/PageWrapper";
 
 const HomePage: React.FC = () => {
   return (
     <PageWrapper>
       <header style={{ marginBottom: "3rem", textAlign: "center" }}>
-        {/* <Logo/> */}
         <h1 style={{ fontSize: "1.5rem", fontWeight: "bold", color: "#111827", marginBottom: "0.5rem" }}>
         Employee Reimbursement System (ERS)
         </h1>
@@ -14,10 +11,6 @@ const HomePage: React.FC = () => {
           Manage your reimbursements.
         </p>
       </header>
-      <div style={{ display: "flex", justifyContent: "space-between" }}>
-        <Button to="/login">Login</Button>
-        <Button to="/register">Register</Button>
-      </div>
     </PageWrapper>
   );
 };

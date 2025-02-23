@@ -1,27 +1,26 @@
 import { Link } from "react-router-dom";
-// import Logo from "../logo.svg";
-// import "./Header.css";
 
 const Header: React.FC = () => {
   return (
-    <header className="header">
-      <div className="header-content">
-        <Link to="/" className="logo-container">
-          {/* <Logo/> */}
-          <span className="logo-text">
-            Employee Reimbursement System (ERS)
-          </span>
+    <nav className="nav-wrapper green darken-2">
+      <div className="container">
+        <Link to="/" className="brand-logo">
+          Employee Reimbursement System (ERS)
         </Link>
-        <nav className="nav-links">
-          <Link to="/login" className="nav-link" aria-label="Login Page">
-            Login
-          </Link>
-          <Link to="/register" className="nav-link" aria-label="Register Page">
-            Register
-          </Link>
-        </nav>
+        <ul className="right hide-on-med-and-down">
+          <li>
+            <Link to="/login" className="waves-effect waves-light btn-small white green-text text-darken-2">
+              Login
+            </Link>
+          </li>
+          <li>
+            <Link to="/register" className="waves-effect waves-light btn-small white green-text text-darken-2">
+              Register
+            </Link>
+          </li>
+        </ul>
       </div>
-    </header>
+    </nav>
   );
 };
 

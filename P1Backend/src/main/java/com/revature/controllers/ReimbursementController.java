@@ -15,7 +15,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/gmg/reimbursements")
-@CrossOrigin
+@CrossOrigin(value = "http://localhost:5173", allowCredentials = "true")
 
 public class ReimbursementController {
 
@@ -58,5 +58,13 @@ public class ReimbursementController {
         );
 
         return ResponseEntity.ok(reimbursementDTO);
+    }
+
+    // Delete reimbursement by id
+    @DeleteMapping("/{reimbursementId}")
+    public ResponseEntity<Void> deleteReimbursement(@PathVariable Long reimbursementId) {
+        reimbursementService.deleteReimbursement(reimbursementId);
+
+        return ResponseEntity.noContent().build();
     }
 }

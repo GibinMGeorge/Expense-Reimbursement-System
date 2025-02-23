@@ -1,4 +1,4 @@
-/* Ensure full height for layout */
+Ensure full height for layout
 html, body, #root, .layout-container {
   height: 100%;
   display: flex;

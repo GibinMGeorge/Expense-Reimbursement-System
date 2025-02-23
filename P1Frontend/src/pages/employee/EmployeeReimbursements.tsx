@@ -3,43 +3,39 @@ import { ReimbursementList } from "../../components/reimbursements/Reimbursement
 import { Button } from "../../components/Button";
 import { ReimbursementRequest, ReimbursementResponse } from "../../interfaces/reimbursement";
 import { UserRole } from "../../interfaces/UserRole";
-import { createReimbursement, getReimbursements, getReimbursementsByUserId,} from "../../services/reimbursementService";
-import { PlusIcon } from "@heroicons/react/24/outline";
+import { createReimbursement, getReimbursements, getReimbursementsByUserId } from "../../services/reimbursementService";
 import { useEffect, useState } from "react";
 import toast from 'react-hot-toast';
+import M from 'materialize-css'; // Import Materialize for modal support
 
 interface ReimbursementListProps {
   role?: UserRole;
 }
 
 const EmployeeReimbursements: React.FC<ReimbursementListProps> = ({ role }) => {
-  const [reimbursements, setReimbursements] = useState<ReimbursementResponse[]>(
-    []
-  );
+  const [reimbursements, setReimbursements] = useState<ReimbursementResponse[]>([]);
   const [newReimbursementAmount, setNewReimbursementAmount] = useState<number>(0);
   const [newReimbursementDescription, setNewReimbursementDescription] = useState<string>('');
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState<boolean>(false);
+
+  useEffect(() => {
+    M.AutoInit(); // Initialize Materialize components
+    fetchData();
+  }, []);
 
   const fetchData = async () => {
     try {
-      // TODO: delete hardcode
       let reimbursements: ReimbursementResponse[];
       if (role === "MANAGER") {
         reimbursements = await getReimbursements();
       } else {
         reimbursements = await getReimbursementsByUserId(4);
       }
-
       setReimbursements(reimbursements);
     } catch (error: any) {
-      // TODO: Add type guard
       console.log(error.message);
     }
   };
-
-  // TODO: Add isLoading
-  useEffect(() => {
-    fetchData();
-  }, []);
 
   const handleSaveReimbursement = async () => {
     const payload: ReimbursementRequest = {
@@ -48,53 +44,53 @@ const EmployeeReimbursements: React.FC<ReimbursementListProps> = ({ role }) => {
       amount: newReimbursementAmount,
       status: "PENDING",
     };
-    console.log(payload);
 
     try {
-      const response = await createReimbursement(payload);
+      await createReimbursement(payload);
       setNewReimbursementAmount(0);
       setNewReimbursementDescription('');
       toast.success("Reimbursement created successfully!");
-      console.log(response);
+      setIsCreateModalOpen(false);
+      fetchData();
     } catch (error: any) {
       toast.error("Failed to create reimbursement. Please try again later.");
       console.error("Error creating reimbursement:", error);
     }
-
-    fetchData();
   };
-
-  const handleReimbursementChanged = async () => {
-    await fetchData();
-  };
-
-  const [isCreateModalOpen, setIsCreateModalOpen] = useState<boolean>(false);
 
   return (
-    <div className="text-center">
-      <h1 className="text-2xl font-semibold mb-8 text-gray-700">
-        {role === "MANAGER" ? "Manage" : "Your"} Reimbursements
-      </h1>
-      <div className="flex justify-center mb-8">
-        <Button
-          handleClick={() => setIsCreateModalOpen(true)}
-          className="rounded-full flex items-center justify-center shadow-sm bg-green-600 hover:bg-green-700"
-          aria-label="Add Reimbursement"
-        >
-          <PlusIcon className="w-6 h-6 pr-2" />Create New Reimbursement
-        </Button>
+    <div className="container section">
+      <div className="card-panel green lighten-4 center-align">
+        <h4 className="green-text text-darken-2">
+          {role === "MANAGER" ? "Manage" : "Your"} Reimbursements
+        </h4>
       </div>
-      {reimbursements && reimbursements.length > 0 ? (
+
+      {/* Create New Reimbursement Button (Materialize Floating Button) */}
+      <div className="fixed-action-btn">
+        <a
+          href="#createReimbursementModal"
+          className="btn-floating btn-large green darken-2 waves-effect waves-light modal-trigger"
+          onClick={() => setIsCreateModalOpen(true)}
+        >
+          <i className="material-icons">add</i>
+        </a>
+      </div>
+
+      {/* Reimbursement List */}
+      {reimbursements.length > 0 ? (
         <ReimbursementList
           reimbursements={reimbursements}
           role={role}
-          handleReimbursementChanged={handleReimbursementChanged}
+          handleReimbursementChanged={fetchData}
         />
       ) : (
-        <p className="text-lg text-gray-700 text-center py-4 italic">
+        <p className="flow-text center-align grey-text text-darken-1">
           No reimbursements found.
         </p>
       )}
+
+      {/* Create Reimbursement Modal */}
       <CreateReimbursementFormModal
         isOpen={isCreateModalOpen}
         handleClose={() => setIsCreateModalOpen(false)}

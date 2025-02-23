@@ -13,71 +13,90 @@ const UserLayout: React.FC<UserLayoutProps> = (role: UserLayoutProps) => {
   const navigate = useNavigate();
 
   const handleLogoutClick = async (e: React.MouseEvent) => {
-      e.preventDefault();
+    e.preventDefault();
 
-      try {
-        const response = await logoutUser();
+    try {
+      const response = await logoutUser();
 
-        const loadingToast = toast.loading('You are being redirected to the login page...');
-        toast.success('Logout successful!');
+      const loadingToast = toast.loading(
+        "You are being redirected to the login page..."
+      );
+      toast.success("Logout successful!");
 
-        localStorage.removeItem('userId');
-        localStorage.removeItem('username');
-        localStorage.removeItem('role');
+      localStorage.removeItem("userId");
+      localStorage.removeItem("username");
+      localStorage.removeItem("role");
 
-        setTimeout(() => {
-          navigate('/login');
-          toast.dismiss(loadingToast);
-        }, 2000);
+      setTimeout(() => {
+        navigate("/login");
+        toast.dismiss(loadingToast);
+      }, 2000);
 
-        console.log(response);
-      } catch (error) {
-        toast.error('Logout failed. Please try again.');
-        console.error('Logout failed:', error);
-      }
+      console.log(response);
+    } catch (error) {
+      toast.error("Logout failed. Please try again.");
+      console.error("Logout failed:", error);
+    }
   };
 
   return (
     <div className="flex flex-col min-h-screen">
-      <header className="bg-gray-50 shadow-sm">
-        <div className="container mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between items-center text-center md:text-left">
-          <Link to="/" className="flex flex-col sm:flex-row items-center">
-            <span className="mt-2 sm:mt-0 sm:ml-2 text-xl font-semibold text-gray-900">
+      {/* Green Navbar */}
+      <header className="navbar-fixed">
+        <nav className="green">
+          <div className="nav-wrapper container">
+            <Link to="/" className="brand-logo">
               Employee Reimbursement System
-            </span>
-          </Link>
-          <nav className="mt-4 sm:mt-0 flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4">
-            <span className="mt-2 sm:mt-0 sm:ml-2 text-md text-gray-900">
-              Hello, <span className="italic text-blue-600">{role.role}</span>
-            </span>
-            <Link
-              to="/logout"
-              onClick={handleLogoutClick}
-              className="text-gray-800 hover:text-gray-900 active:text-blue-600 transition-colors duration-300 ease-in-out"
-              aria-label="Logout Page"
-            >
-              Logout
             </Link>
-          </nav>
-        </div>
-      </header>
-      <main className="flex flex-col flex-grow items-center px-4 py-6">
-        {role.role === "MANAGER" && (
-          <div className="p-4 flex space-x-4 mb-4">
-            <Button
-              to="/manager/reimbursements"
-            >
-              Manage Reimbursements
-            </Button>
-            <Button
-              to="/manager/users"
-            >
-              Manage Users
-            </Button>
+
+            <ul className="right hide-on-med-and-down">
+              {/* Username Display */}
+              <li>
+                <span className="white-text">Hello, {role.role}</span>
+              </li>
+
+              {/* Logout Button (Moved to Right) */}
+              <li>
+                <Link
+                  to="/logout"
+                  onClick={handleLogoutClick}
+                  className="waves-effect waves-light btn red darken-2 white-text"
+                >
+                  Logout
+                </Link>
+              </li>
+            </ul>
           </div>
-        )}
+        </nav>
+      </header>
+
+      {/* Manager Controls - Moved Outside Navbar */}
+      {role.role === "MANAGER" && (
+        <div className="container section">
+          <div className="card-panel green lighten-4 center-align">
+            <h5 className="green-text text-darken-2"></h5>
+            <div className="row">
+              <div className="col s6">
+                <Link to="/manager/reimbursements" className="waves-effect waves-light btn green darken-2 white-text">
+                  Manage Reimbursements
+                </Link>
+              </div>
+              <div className="col s6">
+                <Link to="/manager/users" className="waves-effect waves-light btn green darken-2 white-text">
+                  Manage Users
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Main Content */}
+      <main className="container section">
         <Outlet />
       </main>
+
+      {/* Footer */}
       <Footer />
     </div>
   );

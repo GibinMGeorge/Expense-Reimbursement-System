@@ -78,13 +78,14 @@ const UserRow: React.FC<UserRowProps> = ({ user, handleRowDeleted }) => {
 
             {/* Delete only Employees */}
             {role === UserRole.USER && (
-              <Button
-                handleClick={() => setIsDeleteModalOpen(true)}
-                className="w-12 h-12 flex items-center justify-center text-red-600 hover:text-red-100 bg-red-100 hover:bg-red-600 active:bg-red-700"
-                aria-label="Delete User"
-              >
-                <TrashIcon />
-              </Button>
+            <Button
+            handleClick={() => setIsDeleteModalOpen(true)}
+            className="btn red darken-2 waves-effect waves-light btn-small"
+            aria-label="Delete User"
+          >
+            <i className="material-icons">remove_circle_outline</i>
+          </Button>                              
+            
             )}
           </div>
         </td>

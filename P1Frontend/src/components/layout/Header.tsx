@@ -5,12 +5,11 @@ const Header: React.FC = () => {
     <nav className="nav-wrapper green darken-3">
       <div className="container">
         <Link to="/" className="brand-logo left" style={{ fontSize: "1.7rem", fontWeight: "bold", paddingLeft: "10px" }}>
-          <i className="material-icons left">Employee Reimbursement System (ERS)</i> 
+          <i>Employee Reimbursement System (ERS)</i> 
         </Link>
 
         {/* Mobile Menu Toggle */}
         <a href="#" data-target="mobile-nav" className="sidenav-trigger right">
-          <i className="material-icons">menu</i>
         </a>
 
         {/* Desktop Navigation */}

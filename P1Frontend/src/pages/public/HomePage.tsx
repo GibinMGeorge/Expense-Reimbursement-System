@@ -34,10 +34,10 @@ const HomePage: React.FC = () => {
           {/* CTA Buttons */}
           <div className="section">
             <a href="/login" className="waves-effect waves-light btn-large green darken-2" style={{ marginRight: "10px" }}>
-              <strong className="material-icons left">login</strong>
+              <strong>login</strong>
             </a>
             <a href="/register" className="waves-effect waves-light btn-large blue darken-2">
-            <strong className="material-icons left">Register</strong>
+            <strong>Register</strong>
             </a>
           </div>
         </div>

@@ -1,4 +1,3 @@
-import { Button } from "../Button";
 import { ReimbursementResolveRequest, ReimbursementResponse } from "../../interfaces/reimbursement";
 import { useEffect, useState } from "react";
 import { ResolveReimbursementModal } from "./ResolveReimbursement";

@@ -54,7 +54,7 @@ const CreateReimbursementFormModal: React.FC<CreateReimbursementFormModalProps> 
           required
         />
       </div>
-      <div className="modal-footer">
+      <div className="modal-footer" style={{ display: "flex", justifyContent: "center", gap: "15px" }}>
         <Button
           handleClick={handleSaveButtonClick}
           className="btn green waves-effect waves-light"

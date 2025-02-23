@@ -1,22 +1,22 @@
 import { UserList } from '../../components/users/Userlist';
+import { UserRole } from '../../interfaces/UserRole';
 import { UserResponse } from '../../interfaces/user';
 import { getUsers } from '../../services/userService';
 import { useEffect, useState } from 'react';
 
 const ManagerUsers: React.FC = () => {
   const [users, setUsers] = useState<UserResponse[]>([]);
+  const currentUserRole = localStorage.getItem("role") as UserRole;
 
   const fetchData = async () => {
     try {
       const users = await getUsers();
       setUsers(users);
     } catch (error: any) {
-      // TODO: Add type guard
       console.log(error.message);
     }
   };
 
-  // TODO: Add isLoading
   useEffect(() => {
     fetchData();
   }, []);

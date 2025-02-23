@@ -1,6 +1,5 @@
 import { CreateReimbursementFormModal } from "../../components/reimbursements/CreateReimbursementForm";
 import { ReimbursementList } from "../../components/reimbursements/ReimbursementList";
-import { Button } from "../../components/Button";
 import { ReimbursementRequest, ReimbursementResponse } from "../../interfaces/reimbursement";
 import { UserRole } from "../../interfaces/UserRole";
 import { createReimbursement, getReimbursements, getReimbursementsByUserId } from "../../services/reimbursementService";

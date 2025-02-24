@@ -4,7 +4,7 @@ import { Button } from "../Button";
 interface DeleteUserModalProps {
   isOpen: boolean;
   handleClose: () => void;
-  handleDeleteUser: () => void;
+  handleDeleteUser: (userId: number) => void;
   userId: number;
 }
 
@@ -28,9 +28,30 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = ({
   }, [handleClose]);
 
   const handleDeleteButtonClick = () => {
-    handleDeleteUser();
+    console.log("✅ Delete button inside modal clicked for user ID:", userId);
+    
+    if (!userId) {
+      console.error("❌ User ID is undefined in DeleteUserModal!");
+      return;
+    }
+  
+    if (typeof handleDeleteUser === "function") {
+      handleDeleteUser(userId); // ✅ This ensures the function is triggered
+      console.log("🚀 handleDeleteUser called for user ID:", userId);
+    } else {
+      console.error("❌ handleDeleteUser is NOT a function!");
+    }
+  
     handleClose();
-  }
+  };
+  
+  
+
+  useEffect(() => {
+    console.log("📝 DeleteUserModal Rendered. isOpen:", isOpen, "userId:", userId);
+  }, [isOpen, userId]);
+  
+  
 
   if (!isOpen) return null;
 

@@ -28,6 +28,7 @@ const createUser = async (user: UserRequest): Promise<UserResponse> => {
 };
 
 const deleteUser = async (userId: number): Promise<void> => {
+  console.log("🚀 Sending DELETE request for user ID:", userId);
   try {
     const response = await api.delete(`/users/${userId}`);
 

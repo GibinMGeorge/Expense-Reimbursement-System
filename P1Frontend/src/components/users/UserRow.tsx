@@ -1,7 +1,7 @@
 import { UserResponse } from '../../interfaces/user';
 import { UserRole } from "../../interfaces/UserRole";
 import { Button } from '../Button';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { DeleteUserModal } from './DeleteUser';
 import { ChangeUserRoleModal } from './UpdateUserRole';
 import { deleteUser, updateUserRole } from '../../services/userService';
@@ -18,17 +18,40 @@ const UserRow: React.FC<UserRowProps> = ({ user, handleRowDeleted }) => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
   const [isRoleChangeModalOpen, setIsRoleChangeModalOpen] = useState<boolean>(false);
 
-  const handleDeleteUser = async () => {
-    try {
-      await deleteUser(id);
-      toast.success("User deleted successfully!");
-      if (handleRowDeleted) handleRowDeleted();
-    } catch (error: any) {
-      toast.error("Failed to delete user. Please try again.");
-      console.error("Error deleting user:", error);
-    }
-    setIsDeleteModalOpen(false);
-  };
+    // Debug state changes
+    useEffect(() => {
+      console.log("🔥 isDeleteModalOpen changed:", isDeleteModalOpen);
+    }, [isDeleteModalOpen]);
+
+    const handleDeleteUser = async (userId: number) => {
+      console.log("🛠 Attempting to delete user ID:", userId);
+    
+      if (!userId) {
+        console.error("❌ User ID is undefined!");
+        return;
+      }
+    
+      try {
+        console.log("🚀 Sending DELETE request...");
+        const response = await deleteUser(userId);
+    
+        console.log("✅ Delete API Response:", response);
+    
+        if (handleRowDeleted) {
+          console.log("🔄 Refreshing user list...");
+          handleRowDeleted();
+        }
+    
+        toast.success("User deleted successfully!");
+      } catch (error: any) {
+        console.error("❌ Error deleting user:", error);
+        toast.error("Failed to delete user. Please try again.");
+      }
+    
+      setIsDeleteModalOpen(false);
+    };
+    
+  
 
   const handleChangeRole = async () => {
     try {
@@ -78,12 +101,19 @@ const UserRow: React.FC<UserRowProps> = ({ user, handleRowDeleted }) => {
             {/* Delete only Employees */}
             {role === UserRole.USER && (
             <Button
-            handleClick={() => setIsDeleteModalOpen(true)}
-            className="btn red darken-2 waves-effect waves-light btn-small" 
+            handleClick={() => {
+              console.log("🛠 Delete button clicked for user ID:", id); // Debugging
+              setIsDeleteModalOpen(true);
+              setTimeout(() => {
+                console.log("📌 Modal should still be open:", isDeleteModalOpen);
+              }, 1000);
+            }}
+            className="btn red darken-2 waves-effect waves-light btn-small"
             aria-label="Delete User"
           >
             <i className="material-icons">clear</i>
-          </Button>                              
+          </Button>
+                                       
             
             )}
           </div>
@@ -93,9 +123,10 @@ const UserRow: React.FC<UserRowProps> = ({ user, handleRowDeleted }) => {
       <DeleteUserModal
         isOpen={isDeleteModalOpen}
         handleClose={() => setIsDeleteModalOpen(false)}
-        handleDeleteUser={handleDeleteUser}
+        handleDeleteUser={(userId) => handleDeleteUser(userId)} // ✅ Explicitly passing userId
         userId={id}
       />
+
 
       <ChangeUserRoleModal
         isOpen={isRoleChangeModalOpen}
